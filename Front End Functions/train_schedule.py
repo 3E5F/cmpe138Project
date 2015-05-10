@@ -1,7 +1,7 @@
 # Import libraries
 
 # Import files
-from passenger_home import *
+from core import *
 
 # Default values
 default_values = {}
