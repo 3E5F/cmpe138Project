@@ -44,3 +44,10 @@ class conductor_home(core):
 		except Exception as e:
 			print(e)
 			print("Did not create connection to database")
+
+	def get_login(self):
+		return self.bool_login
+
+	def reset(self):
+		self.cache_conductor = []
+		self.bool_login = False
