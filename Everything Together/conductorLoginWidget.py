@@ -11,6 +11,7 @@ from PySide import QtCore, QtGui
 
 class conductorLoginWidget(QtGui.QWidget):
     submitRequest = QtCore.Signal()
+    goBack = QtCore.Signal()
     
     def __init__(self):
         super(conductorLoginWidget, self).__init__()
@@ -59,6 +60,14 @@ class conductorLoginWidget(QtGui.QWidget):
         self.submitButton.setGeometry(QtCore.QRect(210, 230, 81, 31))
         self.submitButton.setObjectName(("submitButton"))
         self.submitButton.clicked.connect(self.conductorHomeScreen)
+        
+        self.backButton = QtGui.QPushButton(self)
+        self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.backButton.setFont(font)
+        self.backButton.setObjectName(("backButton"))
+        self.backButton.clicked.connect(self.goBackOneScreen)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -69,10 +78,15 @@ class conductorLoginWidget(QtGui.QWidget):
         self.enterConductorIDLabel.setText(QtGui.QApplication.translate("Form", "Enter conductor ID", None, QtGui.QApplication.UnicodeUTF8))
         self.conductorPasswordLabel.setText(QtGui.QApplication.translate("Form", "Password", None, QtGui.QApplication.UnicodeUTF8))
         self.submitButton.setText(QtGui.QApplication.translate("Form", "Submit", None, QtGui.QApplication.UnicodeUTF8))
+        self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
     
     def conductorHomeScreen(self):
         print "Transitioning to conductor home screen"
         self.submitRequest.emit()
+        
+    def goBackOneScreen(self):
+        print "Going Back one screen"
+        self.goBack.emit()
 
 def main():
     app = QtGui.QApplication(sys.argv)

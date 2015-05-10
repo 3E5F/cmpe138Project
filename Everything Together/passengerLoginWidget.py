@@ -13,6 +13,7 @@ from passenger_checkin import *
 
 class passengerLoginWidget(QtGui.QWidget):
     submitRequest = QtCore.Signal()
+    goBack = QtCore.Signal()
     
     def __init__(self):
         super(passengerLoginWidget, self).__init__()
@@ -62,6 +63,14 @@ class passengerLoginWidget(QtGui.QWidget):
         self.submitButton.setGeometry(QtCore.QRect(210, 230, 81, 31))
         self.submitButton.setObjectName(("submitButton"))
         self.submitButton.clicked.connect(self.submitButtonClicked)
+        
+        self.backButton = QtGui.QPushButton(self)
+        self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.backButton.setFont(font)
+        self.backButton.setObjectName(("backButton"))
+        self.backButton.clicked.connect(self.goBackOneScreen)
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -72,6 +81,7 @@ class passengerLoginWidget(QtGui.QWidget):
         self.enterPassengerIDLabel.setText(QtGui.QApplication.translate("Form", "Enter Passenger ID", None, QtGui.QApplication.UnicodeUTF8))
         self.passengerPasswordLabel.setText(QtGui.QApplication.translate("Form", "Password", None, QtGui.QApplication.UnicodeUTF8))
         self.submitButton.setText(QtGui.QApplication.translate("Form", "Submit", None, QtGui.QApplication.UnicodeUTF8))
+        self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
     
     def submitButtonClicked(self):
         #submit button is clicked
@@ -88,6 +98,10 @@ class passengerLoginWidget(QtGui.QWidget):
             self.passengerHomeScreen()
         else:
             print "Not a valid Passenger ID"
+    
+    def goBackOneScreen(self):
+        print "Going Back one screen"
+        self.goBack.emit()
     
     def passengerHomeScreen(self):
         print "Transitioninig to passenger home screen"

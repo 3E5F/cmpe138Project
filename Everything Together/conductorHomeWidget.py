@@ -13,6 +13,7 @@ class conductorHomeWidget(QtGui.QWidget):
     myTrains_signal = QtCore.Signal()
     schedules_signal = QtCore.Signal()
     addNotification_signal = QtCore.Signal()
+    goBack = QtCore.Signal()
     
     def __init__(self):
         super(conductorHomeWidget, self).__init__()
@@ -50,6 +51,14 @@ class conductorHomeWidget(QtGui.QWidget):
         self.addNotification_button.setObjectName(("addNotification_button"))
         self.addNotification_button.clicked.connect(self.addNotificationScreen)
         
+        self.backButton = QtGui.QPushButton(self)
+        self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.backButton.setFont(font)
+        self.backButton.setObjectName(("backButton"))
+        self.backButton.clicked.connect(self.goBackOneScreen)
+        
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
@@ -59,6 +68,7 @@ class conductorHomeWidget(QtGui.QWidget):
         self.myTrains_button.setText(QtGui.QApplication.translate("Form", "My Trains", None, QtGui.QApplication.UnicodeUTF8))
         self.schedules_button.setText(QtGui.QApplication.translate("Form", "Schedules", None, QtGui.QApplication.UnicodeUTF8))
         self.addNotification_button.setText(QtGui.QApplication.translate("Form", "Add Notification", None, QtGui.QApplication.UnicodeUTF8))
+        self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
 
     def myTrainsScreen(self):
         print "Transitioning to myTrainsScreen"
@@ -68,6 +78,10 @@ class conductorHomeWidget(QtGui.QWidget):
     
     def addNotificationScreen(self):
         print "Transitioning to addNotificationScreen"
+        
+    def goBackOneScreen(self):
+        print "Going Back one screen"
+        self.goBack.emit()
     
 
 

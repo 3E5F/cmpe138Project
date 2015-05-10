@@ -13,6 +13,7 @@ from passenger_home import *
 from passenger_trips import *
 
 class passengerTripsWidget(QtGui.QWidget):
+    goBack = QtCore.Signal()
     
     def __init__(self, current_user_id):
         super(passengerTripsWidget, self).__init__()
@@ -74,9 +75,17 @@ class passengerTripsWidget(QtGui.QWidget):
         self.destination_field = QtGui.QLabel(self)
         self.destination_field.setGeometry(QtCore.QRect(270, 161, 91, 16))
         self.destination_field.setObjectName(("destination_field"))
+        
+        self.backButton = QtGui.QPushButton(self)
+        self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.backButton.setFont(font)
+        self.backButton.setObjectName(("backButton"))
+        self.backButton.clicked.connect(self.goBackOneScreen)
 
         self.retranslateUi()
-        #QtCore.QMetaObject.connectSlotsByName(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
     def retranslateUi(self):
         self.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
@@ -87,7 +96,11 @@ class passengerTripsWidget(QtGui.QWidget):
         self.purchaseTime_field.setText(QtGui.QApplication.translate("Form", self.purchase_time, None, QtGui.QApplication.UnicodeUTF8))
         self.date_field.setText(QtGui.QApplication.translate("Form", self.purchase_date, None, QtGui.QApplication.UnicodeUTF8))
         self.destination_field.setText(QtGui.QApplication.translate("Form", self.destination, None, QtGui.QApplication.UnicodeUTF8))
+        self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
 
+    def goBackOneScreen(self):
+        print "Going Back one screen"
+        self.goBack.emit()
 def main():
     app = QtGui.QApplication(sys.argv)
     ex = passengerTripsWidget()

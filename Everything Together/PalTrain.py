@@ -14,6 +14,7 @@ from conductorLoginWidget import conductorLoginWidget
 from passengerHomeWidget import passengerHomeWidget
 from conductorHomeWidget import conductorHomeWidget
 from passengerTripsWidget import passengerTripsWidget
+from passengerCheckInWidget import passengerCheckInWidget
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -22,11 +23,11 @@ class MainWindow(QtGui.QMainWindow):
     
     def initUI(self):
         self.setGeometry(QtCore.QRect(500, 500, 500, 500))
-        self.backButton = QtGui.QPushButton(self)
-        self.backButton.setGeometry(QtCore.QRect(20, 10, 41, 25))
+        self.homeButton = QtGui.QPushButton(self)
+        self.homeButton.setGeometry(QtCore.QRect(20, 10, 41, 25))
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.backButton.setFont(font)
+        self.homeButton.setFont(font)
         
         self.CenterFrameWidget = QtGui.QDockWidget(self)
         self.CenterFrameWidget.setGeometry(QtCore.QRect(0, 50, 500, 450))
@@ -37,36 +38,32 @@ class MainWindow(QtGui.QMainWindow):
         
         
     def retranslateUI(self):
-        self.backButton.setText(QtGui.QApplication.translate("Back", "Back", None, QtGui.QApplication.UnicodeUTF8))
-        self.backButton.setFlat(True)
-        self.backButton.setEnabled(False)
+        self.homeButton.setText(QtGui.QApplication.translate("Back", "Home", None, QtGui.QApplication.UnicodeUTF8))
+        self.homeButton.setFlat(False)
+        self.homeButton.setEnabled(True)
+        self.homeButton.clicked.connect(self.setHomeWidget)
     
     
     def setHomeWidget(self):
+        print "Setting widget to home menu"
         self.currentWidget = mainMenuWidget()
         self.currentWidget.pLoginRequest.connect(self.set_passengerLogin_widget)
         self.currentWidget.cLoginRequest.connect(self.set_conductorLogin_widget)
-        self.backButton.setFlat(True)
-        self.backButton.setEnabled(False)
+        
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
     def set_passengerLogin_widget(self):
         print "Setting widget to passenger login"
         self.currentWidget = passengerLoginWidget()
         self.currentWidget.submitRequest.connect(self.set_passengerHome_widget)
-        self.backButton.setFlat(False)
-        self.backButton.setEnabled(True)
-        self.backButton.clicked.connect(self.setHomeWidget)
+        self.currentWidget.goBack.connect(self.setHomeWidget)
         self.CenterFrameWidget.setWidget(self.currentWidget) #===========================================================
     
     def set_conductorLogin_widget(self):
         print "Setting widget to conductor login"
         self.currentWidget = conductorLoginWidget()
         self.currentWidget.submitRequest.connect(self.set_conductorHome_widget)
-        
-        self.backButton.setFlat(False)
-        self.backButton.setEnabled(True)
-        self.backButton.clicked.connect(self.setHomeWidget)
+        self.currentWidget.goBack.connect(self.setHomeWidget)
         self.CenterFrameWidget.setWidget(self.currentWidget) #===========================================================
     
     def set_passengerHome_widget(self):
@@ -77,19 +74,15 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.trainSched_signal.connect(self.set_trainSched_widget)
         self.currentWidget.checkIn_signal.connect(self.set_checkIn_widget)
         self.currentWidget.purchaseTickets_signal.connect(self.set_purchaseTickets_widget)
+        self.currentWidget.goBack.connect(self.set_passengerLogin_widget)
         
-        self.backButton.setFlat(False)
-        self.backButton.setEnabled(True)
-        self.backButton.clicked.connect(self.set_passengerLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
         
     
     def set_conductorHome_widget(self):
         print "Setting widget to conductor home"
         self.currentWidget = conductorHomeWidget()
-        self.backButton.setFlat(False)
-        self.backButton.setEnabled(True)
-        self.backButton.clicked.connect(self.set_conductorLogin_widget)
+        self.currentWidget.goBack.connect(self.set_conductorLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
     def set_myTrips_widget(self):
@@ -97,10 +90,7 @@ class MainWindow(QtGui.QMainWindow):
         current_user_id = self.currentWidget.current_user_id
         self.currentWidget = passengerTripsWidget(current_user_id)
         
-        
-        self.backButton.setFlat(False)
-        self.backButton.setEnabled(True)
-        self.backButton.clicked.connect(self.set_passengerHome_widget)
+        self.currentWidget.goBack.connect(self.set_passengerHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
     def set_trainSched_widget(self):
@@ -108,6 +98,10 @@ class MainWindow(QtGui.QMainWindow):
     
     def set_checkIn_widget(self):
         print "Setting widget to passenger checkIn"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = passengerCheckInWidget(current_user_id)
+        self.currentWidget.goBack.connect(self.set_passengerHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
         
     def set_purchaseTickets_widget(self):
         print "Setting widget to passenger purchaseTickets"
