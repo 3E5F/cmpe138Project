@@ -60,7 +60,7 @@ class passengerCheckInWidget(QtGui.QWidget):
         self.label = QtGui.QLabel(self)
         self.label.setGeometry(QtCore.QRect(160, 190, 181, 141))
         self.label.setText((""))
-        self.label.setPixmap(QtGui.QPixmap(("../Train Project/qrcode.png")))
+        self.label.setPixmap(QtGui.QPixmap(("./qrcode.png")))
         
         
         self.backButton = QtGui.QPushButton(self)
