@@ -19,7 +19,8 @@ from passengerTrainSchedWidget import passengerTrainSchedWidget
 from purchaseTicketsWidget import purchaseTicketsWidget
 from conductorMyTrainsWidget import conductorMyTrainsWidget
 from conductorSchedulesWidget import conductorSchedulesWidget
-from conductorAddNotificationsWidget import conductorAddNotificationsWidget
+from conductorUpdateStatusWidget import conductorUpdateStatusWidget
+from purchaseReceiptWidget import purchaseReceiptWidget
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -75,7 +76,14 @@ class MainWindow(QtGui.QMainWindow):
     def set_purchaseTicket_widget(self):
         print "Setting widget to passenger purchaseTickets"
         self.currentWidget=purchaseTicketsWidget()
-        #self.currentWidget.submitPurchase.connect()
+        self.currentWidget.purchaseReceipt_signal.connect(self.set_receipt_widget)
+        self.currentWidget.goBack.connect(self.setHomeWidget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
+    
+    def set_receipt_widget(self):
+        print "Setting widget to purchase receipt"
+        newPassengerID = self.currentWidget.newPassengerID
+        self.currentWidget = purchaseReceiptWidget(newPassengerID)
         self.currentWidget.goBack.connect(self.setHomeWidget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
@@ -98,7 +106,7 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget = conductorHomeWidget(current_user_id)
         self.currentWidget.myTrains_signal.connect(self.set_c_myTrains_widget)
         self.currentWidget.schedules_signal.connect(self.set_c_schedules)
-        self.currentWidget.addNotifications_signal.connect(self.set_c_addNotifications_widget)
+        self.currentWidget.updateStatus_signal.connect(self.set_c_updateStatus_widget)
         
         self.currentWidget.goBack.connect(self.set_conductorLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
@@ -143,10 +151,10 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.goBack.connect(self.set_conductorHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
-    def set_c_addNotifications_widget(self):
+    def set_c_updateStatus_widget(self):
         print "Setting widget to conductor addNotifications"
         current_user_id = self.currentWidget.current_user_id
-        self.currentWidget = conductorAddNotificationsWidget(current_user_id)
+        self.currentWidget = conductorUpdateStatusWidget(current_user_id)
         
         self.currentWidget.goBack.connect(self.set_conductorHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)

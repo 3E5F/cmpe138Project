@@ -55,7 +55,7 @@ class passengerLoginWidget(QtGui.QWidget):
         self.passengerPasswordLabel.setFont(font)
         self.passengerPasswordLabel.setObjectName(("passengerPasswordLabel"))
         
-        self.passengerPassword_input = QtGui.QTextEdit(self)
+        self.passengerPassword_input = QtGui.QLineEdit(self)
         self.passengerPassword_input.setGeometry(QtCore.QRect(170, 180, 158, 31))
         self.passengerPassword_input.setObjectName(("passengerPassword_input"))
         

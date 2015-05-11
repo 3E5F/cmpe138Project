@@ -13,7 +13,7 @@ from conductor_home import *
 class conductorHomeWidget(QtGui.QWidget):
     myTrains_signal = QtCore.Signal()
     schedules_signal = QtCore.Signal()
-    addNotifications_signal = QtCore.Signal()
+    updateStatus_signal = QtCore.Signal()
     goBack = QtCore.Signal()
     
     def __init__(self, current_user_id):
@@ -60,10 +60,10 @@ class conductorHomeWidget(QtGui.QWidget):
         self.schedules_button.setObjectName(("schedules_button"))
         self.schedules_button.clicked.connect(self.schedulesScreen)
         
-        self.addNotification_button = QtGui.QPushButton(self)
-        self.addNotification_button.setGeometry(QtCore.QRect(200, 180, 101, 41))
-        self.addNotification_button.setObjectName(("addNotification_button"))
-        self.addNotification_button.clicked.connect(self.addNotificationScreen)
+        self.updateStatus_button = QtGui.QPushButton(self)
+        self.updateStatus_button.setGeometry(QtCore.QRect(200, 180, 101, 41))
+        self.updateStatus_button.setObjectName(("updateStatus_button"))
+        self.updateStatus_button.clicked.connect(self.updateStatusScreen)
         
         self.backButton = QtGui.QPushButton(self)
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
@@ -79,9 +79,9 @@ class conductorHomeWidget(QtGui.QWidget):
     def retranslateUi(self):
         self.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.conductorHomeLabel.setText(QtGui.QApplication.translate("Form", "Conductor Home", None, QtGui.QApplication.UnicodeUTF8))
-        self.myTrains_button.setText(QtGui.QApplication.translate("Form", "My Trains", None, QtGui.QApplication.UnicodeUTF8))
+        self.myTrains_button.setText(QtGui.QApplication.translate("Form", "My Train", None, QtGui.QApplication.UnicodeUTF8))
         self.schedules_button.setText(QtGui.QApplication.translate("Form", "Schedules", None, QtGui.QApplication.UnicodeUTF8))
-        self.addNotification_button.setText(QtGui.QApplication.translate("Form", "Add Notification", None, QtGui.QApplication.UnicodeUTF8))
+        self.updateStatus_button.setText(QtGui.QApplication.translate("Form", "Update Status", None, QtGui.QApplication.UnicodeUTF8))
         self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
 
     def myTrainsScreen(self):
@@ -92,9 +92,9 @@ class conductorHomeWidget(QtGui.QWidget):
         print "Transitioning to schedulesScreen"
         self.schedules_signal.emit()
     
-    def addNotificationScreen(self):
-        print "Transitioning to addNotificationScreen"
-        self.addNotifications_signal.emit()
+    def updateStatusScreen(self):
+        print "Transitioning to updateStatusScreen"
+        self.updateStatus_signal.emit()
         
     def goBackOneScreen(self):
         print "Going Back one screen"

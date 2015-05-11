@@ -1,6 +1,7 @@
 import sys
 from PySide import QtCore, QtGui
 from conductor_home import *
+from conductor_train import *
 
 class conductorMyTrainsWidget(QtGui.QWidget):
     goBack = QtCore.Signal()
@@ -12,12 +13,11 @@ class conductorMyTrainsWidget(QtGui.QWidget):
     
     def initUI(self):
         self.widget_type = 'conductorMyTrainsWidget'
-        #ph = passenger_home()
-        #ph.check_login(self.current_user_id)
-        #pc = passenger_checkin(ph.cache_passenger)
-        
-        #self.passenger_id=pc.get_ticket_number()
-        #self.passenger_name = pc.get_passenger_name()
+        self.ch = conductor_home()
+        self.ch.check_login(self.current_user_id)
+        self.ct = conductor_trains(self.ch.cache_conductor)
+        self.ct.query_conductor_information()
+        self.myTrainNumber = self.ct.get_conductor_train()
         
         self.createLabels()
     
@@ -32,6 +32,20 @@ class conductorMyTrainsWidget(QtGui.QWidget):
         self.conductorMyTrains_title.setFont(font)
         self.conductorMyTrains_title.setObjectName(("conductorMyTrains_title"))
         
+        
+        self.myTrainNum_Label = QtGui.QLabel(self)
+        self.myTrainNum_Label.setGeometry(QtCore.QRect(150, 90, 150, 16))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.myTrainNum_Label.setFont(font)
+        self.myTrainNum_Label.setObjectName(("myTrainNum_Label"))
+        
+        self.myTrainNum_Field = QtGui.QLabel(self)
+        self.myTrainNum_Field.setGeometry(QtCore.QRect(300, 90, 110, 16))
+        self.myTrainNum_Field.setFont(font)
+        self.myTrainNum_Field.setObjectName(("myTrainNum_Field"))
+        
+        
         self.backButton = QtGui.QPushButton(self)
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
         font = QtGui.QFont()
@@ -45,7 +59,10 @@ class conductorMyTrainsWidget(QtGui.QWidget):
 
     def retranslateUi(self):
         self.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
-        self.conductorMyTrains_title.setText(QtGui.QApplication.translate("Form", "My Trains", None, QtGui.QApplication.UnicodeUTF8))
+        self.conductorMyTrains_title.setText(QtGui.QApplication.translate("Form", "My Train", None, QtGui.QApplication.UnicodeUTF8))
+    
+        self.myTrainNum_Label.setText(QtGui.QApplication.translate("Form", "My Train Number ", None, QtGui.QApplication.UnicodeUTF8))
+        self.myTrainNum_Field.setText(QtGui.QApplication.translate("Form", str(self.myTrainNumber), None, QtGui.QApplication.UnicodeUTF8))
     
         self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
 
