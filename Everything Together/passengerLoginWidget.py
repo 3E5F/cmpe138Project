@@ -10,6 +10,7 @@ import sys
 from PySide import QtCore, QtGui
 from passenger_home import *
 from passenger_checkin import *
+from loggerModule import *
 
 class passengerLoginWidget(QtGui.QWidget):
     submitRequest = QtCore.Signal()
@@ -87,16 +88,20 @@ class passengerLoginWidget(QtGui.QWidget):
         #submit button is clicked
         #Checking if value is valid
         self.passengerID = self.passengerID_input.text()
+        logAttempt = 'Trying ID: ' + str(self.passengerID)
+        loggerModule(logAttempt)
         print self.passengerID
         ph = passenger_home()
         ph.check_login(self.passengerID)
-        #print ph.get_login()
+        
         
         if ph.get_login(): #Checks if the passengerID is valid
             #pc = passenger_checkin(ph.cache_passenger)
+            loggerModule('Succeeded')
             self.current_user_id = self.passengerID
             self.passengerHomeScreen()
         else:
+            loggerModule('Failed')
             print "Not a valid Passenger ID"
     
     def goBackOneScreen(self):

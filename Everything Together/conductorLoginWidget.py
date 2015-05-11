@@ -9,6 +9,7 @@
 import sys
 from PySide import QtCore, QtGui
 from conductor_home import *
+from loggerModule import *
 
 class conductorLoginWidget(QtGui.QWidget):
     submitRequest = QtCore.Signal()
@@ -83,14 +84,20 @@ class conductorLoginWidget(QtGui.QWidget):
     
     def submitButtonClicked(self):
         self.conductorID = self.conductorID_input.text()
-        print self.conductorID
+        logAttempt = 'Trying ID: ' + str(self.conductorID)
+        print logAttempt
+        
+        loggerModule(logAttempt)
+        
         ch = conductor_home()
         ch.check_login(self.conductorID)
         
         if ch.get_login():
+            loggerModule('Succeeded')
             self.current_user_id = self.conductorID
             self.conductorHomeScreen()
         else:
+            loggerModule('Failed')
             print "Not a valid Conductor ID"
         
     def conductorHomeScreen(self):

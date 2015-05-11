@@ -11,6 +11,7 @@ import sys
 from PySide import QtCore, QtGui
 from passenger_home import *
 from passenger_trips import *
+from loggerModule import *
 
 class purchaseReceiptWidget(QtGui.QWidget):
     goBack = QtCore.Signal()
@@ -29,6 +30,14 @@ class purchaseReceiptWidget(QtGui.QWidget):
         self.purchase_time=pt.get_purchase_time()
         self.destination = pt.get_destination()
         self.purchase_date = pt.get_purchase_date()
+        
+        loggerText = "Puchase made for new Passenger ID: "+ str(self.current_user_id)
+        loggerModule(loggerText)
+        loggerText = "Purchase Time: "+ str(self.purchase_time)
+        loggerModule(loggerText)
+        loggerText = "Purchase Date: "+ str(self.purchase_date)
+        loggerModule(loggerText)
+        
         
         self.createLabels()
     
