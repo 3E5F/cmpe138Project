@@ -6,6 +6,7 @@ from core import *
 # Default values
 default_values = {}
 default_values['PASSENGER_RETURN'] = 1
+default_values['PASSENGER_QUERY'] = 'select * from passengers where p_id = {0!s}'
 
 class passenger_home(core):
 	def __init__(self):
@@ -23,7 +24,7 @@ class passenger_home(core):
 
 		try:
 			if user_id is not None:
-				str_query = 'select * from passengers where p_id = {0!s}'.format(user_id)
+				str_query = default_values['PASSENGER_QUERY'].format(user_id)
 				try:
 					self.mysql_cursor.execute(str_query)
 					for elem in self.mysql_cursor:

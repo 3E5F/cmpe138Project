@@ -12,9 +12,12 @@ class passenger_trips(passenger_home):
 		self.destination=None
 		self.date=None
 
-		self.purchase_time = cache_passenger['purchaseTime']
-		self.destination = cache_passenger['destination']
-		self.date=cache_passenger['date_']
+		try:
+			self.purchase_time = cache_passenger['purchaseTime']
+			self.destination = cache_passenger['destination']
+			self.date=cache_passenger['date_']
+		except Exception as e:
+			print(e)
 
 	def get_purchase_time(self):
 		return str(self.purchase_time)
