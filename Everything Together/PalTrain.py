@@ -16,8 +16,10 @@ from conductorHomeWidget import conductorHomeWidget
 from passengerTripsWidget import passengerTripsWidget
 from passengerCheckInWidget import passengerCheckInWidget
 from passengerTrainSchedWidget import passengerTrainSchedWidget
-from passengerPurchaseTicketsWidget import passengerPurchaseTicketsWidget
+from purchaseTicketsWidget import purchaseTicketsWidget
 from conductorMyTrainsWidget import conductorMyTrainsWidget
+from conductorSchedulesWidget import conductorSchedulesWidget
+from conductorAddNotificationsWidget import conductorAddNotificationsWidget
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -50,6 +52,7 @@ class MainWindow(QtGui.QMainWindow):
     def setHomeWidget(self):
         print "Setting widget to home menu"
         self.currentWidget = mainMenuWidget()
+        self.currentWidget.purchaseTicketRequest.connect(self.set_purchaseTicket_widget)
         self.currentWidget.pLoginRequest.connect(self.set_passengerLogin_widget)
         self.currentWidget.cLoginRequest.connect(self.set_conductorLogin_widget)
         
@@ -69,6 +72,13 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.goBack.connect(self.setHomeWidget)
         self.CenterFrameWidget.setWidget(self.currentWidget) #===========================================================
     
+    def set_purchaseTicket_widget(self):
+        print "Setting widget to passenger purchaseTickets"
+        self.currentWidget=purchaseTicketsWidget()
+        #self.currentWidget.submitPurchase.connect()
+        self.currentWidget.goBack.connect(self.setHomeWidget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
+    
     def set_passengerHome_widget(self):
         print "Setting widget to passenger home"
         current_user_id = self.currentWidget.current_user_id
@@ -76,7 +86,7 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.myTrips_signal.connect(self.set_myTrips_widget)
         self.currentWidget.trainSched_signal.connect(self.set_p_trainSched_widget)
         self.currentWidget.checkIn_signal.connect(self.set_p_checkin_widget)
-        self.currentWidget.purchaseTickets_signal.connect(self.set_p_purchaseTickets_widget)
+        #self.currentWidget.purchaseTickets_signal.connect(self.set_p_purchaseTickets_widget)
         
         self.currentWidget.goBack.connect(self.set_passengerLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
@@ -117,14 +127,6 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.goBack.connect(self.set_passengerHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
         
-    def set_p_purchaseTickets_widget(self):
-        print "Setting widget to passenger purchaseTickets"
-        current_user_id = self.currentWidget.current_user_id
-        self.currentWidget = passengerPurchaseTicketsWidget(current_user_id)
-        
-        self.currentWidget.goBack.connect(self.set_passengerHome_widget)
-        self.CenterFrameWidget.setWidget(self.currentWidget)
-        
     def set_c_myTrains_widget(self):
         print "Setting widget to conductor myTrains"
         current_user_id = self.currentWidget.current_user_id
@@ -135,15 +137,26 @@ class MainWindow(QtGui.QMainWindow):
     
     def set_c_schedules(self):
         print "Setting widget to conductor schedules"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = conductorSchedulesWidget(current_user_id)
+        
+        self.currentWidget.goBack.connect(self.set_conductorHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
     
     def set_c_addNotifications_widget(self):
         print "Setting widget to conductor addNotifications"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = conductorAddNotificationsWidget(current_user_id)
+        
+        self.currentWidget.goBack.connect(self.set_conductorHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
+        
     
     
 def main():
     app = QtGui.QApplication(sys.argv)
     ex = MainWindow()
-    ex.setWindowTitle("PalTrain") 
+    ex.setWindowTitle("Train Database Project") 
     ex.show()
     sys.exit(app.exec_())
 

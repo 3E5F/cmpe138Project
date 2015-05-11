@@ -15,7 +15,7 @@ class passengerHomeWidget(QtGui.QWidget):
     myTrips_signal = QtCore.Signal()
     trainSched_signal = QtCore.Signal()
     checkIn_signal = QtCore.Signal()
-    purchaseTickets_signal = QtCore.Signal()
+    #purchaseTickets_signal = QtCore.Signal()
     
     goBack = QtCore.Signal()
     
@@ -66,10 +66,10 @@ class passengerHomeWidget(QtGui.QWidget):
         self.checkIn_button.setObjectName(("checkIn_button"))
         self.checkIn_button.clicked.connect(self.checkInScreen)
         
-        self.purchaseTickets_button = QtGui.QPushButton(self)
-        self.purchaseTickets_button.setGeometry(QtCore.QRect(200, 220, 101, 41))
-        self.purchaseTickets_button.setObjectName(("purchaseTickets_button"))
-        self.purchaseTickets_button.clicked.connect(self.purchaseTicketsScreen)
+        #self.purchaseTickets_button = QtGui.QPushButton(self)
+        #self.purchaseTickets_button.setGeometry(QtCore.QRect(200, 220, 101, 41))
+        #self.purchaseTickets_button.setObjectName(("purchaseTickets_button"))
+        #self.purchaseTickets_button.clicked.connect(self.purchaseTicketsScreen)
 
         self.backButton = QtGui.QPushButton(self)
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
@@ -89,7 +89,7 @@ class passengerHomeWidget(QtGui.QWidget):
         self.myTrips_button.setText(QtGui.QApplication.translate("Form", "My Trip", None, QtGui.QApplication.UnicodeUTF8))
         self.trainSched_button.setText(QtGui.QApplication.translate("Form", "Train Schedule", None, QtGui.QApplication.UnicodeUTF8))
         self.checkIn_button.setText(QtGui.QApplication.translate("Form", "Check In", None, QtGui.QApplication.UnicodeUTF8))
-        self.purchaseTickets_button.setText(QtGui.QApplication.translate("Form", "Purchase Tickets", None, QtGui.QApplication.UnicodeUTF8))
+        #self.purchaseTickets_button.setText(QtGui.QApplication.translate("Form", "Purchase Tickets", None, QtGui.QApplication.UnicodeUTF8))
         self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
 
     def myTripsScreen(self):
@@ -104,9 +104,9 @@ class passengerHomeWidget(QtGui.QWidget):
         print "Transitioning to checkInScreen"
         self.checkIn_signal.emit()
     
-    def purchaseTicketsScreen(self):
-        print "Transitioning to purchaseTicketsScreen"
-        self.purchaseTickets_signal.emit()
+    #def purchaseTicketsScreen(self):
+        #print "Transitioning to purchaseTicketsScreen"
+        #self.purchaseTickets_signal.emit()
     
     def goBackOneScreen(self):
         print "Going Back one screen"

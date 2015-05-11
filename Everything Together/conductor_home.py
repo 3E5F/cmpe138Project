@@ -6,6 +6,7 @@ from core import *
 # Default values
 default_values = {}
 default_values['CONDUCTOR_RETURN'] = 1
+default_values['CONDUCTOR_QUERY'] = 'select * from conductor where C_id = {0!s}'
 
 class conductor_home(core):
 	def __init__(self):
@@ -23,7 +24,7 @@ class conductor_home(core):
 
 		try:
 			if conductor_id is not None:
-				str_query = 'select * from conductor where C_id = {0!s}'.format(conductor_id)
+				str_query = default_values['CONDUCTOR_QUERY'].format(conductor_id)
 				try:
 					self.mysql_cursor.execute(str_query)
 					for elem in self.mysql_cursor:

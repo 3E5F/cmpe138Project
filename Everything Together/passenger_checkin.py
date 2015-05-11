@@ -12,9 +12,12 @@ class passenger_checkin(passenger_home):
 		self.last_name=None
 		self.first_name=None
 
-		self.passenger_id = cache_passenger['P_id']
-		self.last_name = cache_passenger['Lname']
-		self.first_name = cache_passenger['Fname']
+		try:
+			self.passenger_id = cache_passenger['P_id']
+			self.last_name = cache_passenger['Lname']
+			self.first_name = cache_passenger['Fname']
+		except Exception as e:
+			print(e)
 
 	def get_ticket_number(self):
 		return str(self.passenger_id)
