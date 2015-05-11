@@ -74,7 +74,7 @@ class mainMenuWidget(QtGui.QWidget):
         # self.tab_label.setText(QtGui.QApplication.translate("api_widget", "API", None, QtGui.QApplication.UnicodeUTF8))
         self.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
         #self.label.setText(QtGui.QApplication.translate("Form", "PalTrain", None, QtGui.QApplication.UnicodeUTF8))
-        self.PalTrainLabel.setText(QtGui.QApplication.translate("Form", "     PalTrain", None, QtGui.QApplication.UnicodeUTF8))
+        self.PalTrainLabel.setText(QtGui.QApplication.translate("Form", "Train Database", None, QtGui.QApplication.UnicodeUTF8))
         self.PassengerLoginButton.setText(QtGui.QApplication.translate("Form", "Passenger Login", None, QtGui.QApplication.UnicodeUTF8))
         self.ConductorLoginButton.setText(QtGui.QApplication.translate("Form", "Conductor Login", None, QtGui.QApplication.UnicodeUTF8))
         self.PurchaseButton.setText(QtGui.QApplication.translate("Form", "Purchase Ticket", None, QtGui.QApplication.UnicodeUTF8))
