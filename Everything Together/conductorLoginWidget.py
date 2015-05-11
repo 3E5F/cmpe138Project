@@ -8,6 +8,7 @@
 # WARNING! All changes made in this file will be lost!
 import sys
 from PySide import QtCore, QtGui
+from conductor_home import *
 
 class conductorLoginWidget(QtGui.QWidget):
     submitRequest = QtCore.Signal()
@@ -41,7 +42,7 @@ class conductorLoginWidget(QtGui.QWidget):
         self.enterConductorIDLabel.setFont(font)
         self.enterConductorIDLabel.setObjectName(("enterConductorIDLabel"))
         
-        self.conductorID_input = QtGui.QTextEdit(self)
+        self.conductorID_input = QtGui.QLineEdit(self)
         self.conductorID_input.setGeometry(QtCore.QRect(170, 100, 158, 31))
         self.conductorID_input.setObjectName(("conductorID_input"))
         
@@ -59,7 +60,7 @@ class conductorLoginWidget(QtGui.QWidget):
         self.submitButton = QtGui.QPushButton(self)
         self.submitButton.setGeometry(QtCore.QRect(210, 230, 81, 31))
         self.submitButton.setObjectName(("submitButton"))
-        self.submitButton.clicked.connect(self.conductorHomeScreen)
+        self.submitButton.clicked.connect(self.submitButtonClicked)
         
         self.backButton = QtGui.QPushButton(self)
         self.backButton.setGeometry(QtCore.QRect(20, 30, 71, 21))
@@ -75,11 +76,23 @@ class conductorLoginWidget(QtGui.QWidget):
     def retranslateUi(self):
         self.setWindowTitle(QtGui.QApplication.translate("Form", "Form", None, QtGui.QApplication.UnicodeUTF8))
         self.conductorLoginLabel.setText(QtGui.QApplication.translate("Form", "Conductor Login", None, QtGui.QApplication.UnicodeUTF8))
-        self.enterConductorIDLabel.setText(QtGui.QApplication.translate("Form", "Enter conductor ID", None, QtGui.QApplication.UnicodeUTF8))
+        self.enterConductorIDLabel.setText(QtGui.QApplication.translate("Form", "Enter Conductor ID", None, QtGui.QApplication.UnicodeUTF8))
         self.conductorPasswordLabel.setText(QtGui.QApplication.translate("Form", "Password", None, QtGui.QApplication.UnicodeUTF8))
         self.submitButton.setText(QtGui.QApplication.translate("Form", "Submit", None, QtGui.QApplication.UnicodeUTF8))
         self.backButton.setText(QtGui.QApplication.translate("Form", "<- Go Back", None, QtGui.QApplication.UnicodeUTF8))
     
+    def submitButtonClicked(self):
+        self.conductorID = self.conductorID_input.text()
+        print self.conductorID
+        ch = conductor_home()
+        ch.check_login(self.conductorID)
+        
+        if ch.get_login():
+            self.current_user_id = self.conductorID
+            self.conductorHomeScreen()
+        else:
+            print "Not a valid Conductor ID"
+        
     def conductorHomeScreen(self):
         print "Transitioning to conductor home screen"
         self.submitRequest.emit()

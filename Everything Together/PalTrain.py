@@ -15,6 +15,9 @@ from passengerHomeWidget import passengerHomeWidget
 from conductorHomeWidget import conductorHomeWidget
 from passengerTripsWidget import passengerTripsWidget
 from passengerCheckInWidget import passengerCheckInWidget
+from passengerTrainSchedWidget import passengerTrainSchedWidget
+from passengerPurchaseTicketsWidget import passengerPurchaseTicketsWidget
+from conductorMyTrainsWidget import conductorMyTrainsWidget
 
 class MainWindow(QtGui.QMainWindow):
     def __init__(self):
@@ -71,17 +74,22 @@ class MainWindow(QtGui.QMainWindow):
         current_user_id = self.currentWidget.current_user_id
         self.currentWidget = passengerHomeWidget(current_user_id)
         self.currentWidget.myTrips_signal.connect(self.set_myTrips_widget)
-        self.currentWidget.trainSched_signal.connect(self.set_trainSched_widget)
-        self.currentWidget.checkIn_signal.connect(self.set_checkIn_widget)
-        self.currentWidget.purchaseTickets_signal.connect(self.set_purchaseTickets_widget)
-        self.currentWidget.goBack.connect(self.set_passengerLogin_widget)
+        self.currentWidget.trainSched_signal.connect(self.set_p_trainSched_widget)
+        self.currentWidget.checkIn_signal.connect(self.set_p_checkin_widget)
+        self.currentWidget.purchaseTickets_signal.connect(self.set_p_purchaseTickets_widget)
         
+        self.currentWidget.goBack.connect(self.set_passengerLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
         
     
     def set_conductorHome_widget(self):
         print "Setting widget to conductor home"
-        self.currentWidget = conductorHomeWidget()
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = conductorHomeWidget(current_user_id)
+        self.currentWidget.myTrains_signal.connect(self.set_c_myTrains_widget)
+        self.currentWidget.schedules_signal.connect(self.set_c_schedules)
+        self.currentWidget.addNotifications_signal.connect(self.set_c_addNotifications_widget)
+        
         self.currentWidget.goBack.connect(self.set_conductorLogin_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
@@ -93,18 +101,43 @@ class MainWindow(QtGui.QMainWindow):
         self.currentWidget.goBack.connect(self.set_passengerHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
     
-    def set_trainSched_widget(self):
+    def set_p_trainSched_widget(self):
         print "Setting widget to passenger trainSched"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = passengerTrainSchedWidget(current_user_id)
+        
+        self.currentWidget.goBack.connect(self.set_passengerHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
     
-    def set_checkIn_widget(self):
+    def set_p_checkin_widget(self):
         print "Setting widget to passenger checkIn"
         current_user_id = self.currentWidget.current_user_id
         self.currentWidget = passengerCheckInWidget(current_user_id)
+        
         self.currentWidget.goBack.connect(self.set_passengerHome_widget)
         self.CenterFrameWidget.setWidget(self.currentWidget)
         
-    def set_purchaseTickets_widget(self):
+    def set_p_purchaseTickets_widget(self):
         print "Setting widget to passenger purchaseTickets"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = passengerPurchaseTicketsWidget(current_user_id)
+        
+        self.currentWidget.goBack.connect(self.set_passengerHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
+        
+    def set_c_myTrains_widget(self):
+        print "Setting widget to conductor myTrains"
+        current_user_id = self.currentWidget.current_user_id
+        self.currentWidget = conductorMyTrainsWidget(current_user_id)
+        
+        self.currentWidget.goBack.connect(self.set_conductorHome_widget)
+        self.CenterFrameWidget.setWidget(self.currentWidget)
+    
+    def set_c_schedules(self):
+        print "Setting widget to conductor schedules"
+    
+    def set_c_addNotifications_widget(self):
+        print "Setting widget to conductor addNotifications"
     
     
 def main():

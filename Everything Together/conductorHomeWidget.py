@@ -8,21 +8,28 @@
 # WARNING! All changes made in this file will be lost!
 import sys
 from PySide import QtCore, QtGui
+from conductor_home import *
 
 class conductorHomeWidget(QtGui.QWidget):
     myTrains_signal = QtCore.Signal()
     schedules_signal = QtCore.Signal()
-    addNotification_signal = QtCore.Signal()
+    addNotifications_signal = QtCore.Signal()
     goBack = QtCore.Signal()
     
-    def __init__(self):
+    def __init__(self, current_user_id):
         super(conductorHomeWidget, self).__init__()
+        self.current_user_id = current_user_id
         self.initUI()
     
     def initUI(self):
         self.widget_type = 'conductorHomeWidget'
         self.name = ''
         self.description = ''
+        ch = conductor_home()
+        ch.check_login(self.current_user_id)
+        
+        self.c_name = self.current_user_id #PLACEHOLDER
+        
         self.createLabels()
     
     def createLabels(self):
@@ -35,6 +42,13 @@ class conductorHomeWidget(QtGui.QWidget):
         font.setPointSize(14)
         self.conductorHomeLabel.setFont(font)
         self.conductorHomeLabel.setObjectName(("conductorHomeLabel"))
+        
+        self.ConductorNameField = QtGui.QTextEdit(self)
+        self.ConductorNameField.setGeometry(QtCore.QRect(140, 60, 211, 31))
+        self.ConductorNameField.setAcceptDrops(True)
+        self.ConductorNameField.setObjectName(("ConductorNameField"))
+        self.ConductorNameField.setReadOnly(True)
+        self.ConductorNameField.setText(self.c_name)
         
         self.myTrains_button = QtGui.QPushButton(self)
         self.myTrains_button.setGeometry(QtCore.QRect(200, 100, 101, 41))
@@ -72,22 +86,23 @@ class conductorHomeWidget(QtGui.QWidget):
 
     def myTrainsScreen(self):
         print "Transitioning to myTrainsScreen"
+        self.myTrains_signal.emit()
         
     def schedulesScreen(self):
         print "Transitioning to schedulesScreen"
+        self.schedules_signal.emit()
     
     def addNotificationScreen(self):
         print "Transitioning to addNotificationScreen"
+        self.addNotifications_signal.emit()
         
     def goBackOneScreen(self):
         print "Going Back one screen"
         self.goBack.emit()
-    
-
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    ex = conductorHomeWidget()
+    ex = conductorHomeWidget(70564689)
     ex.show()
     sys.exit(app.exec_())
 

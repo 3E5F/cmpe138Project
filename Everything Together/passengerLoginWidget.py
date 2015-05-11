@@ -93,7 +93,7 @@ class passengerLoginWidget(QtGui.QWidget):
         #print ph.get_login()
         
         if ph.get_login(): #Checks if the passengerID is valid
-            pc = passenger_checkin(ph.cache_passenger)
+            #pc = passenger_checkin(ph.cache_passenger)
             self.current_user_id = self.passengerID
             self.passengerHomeScreen()
         else:

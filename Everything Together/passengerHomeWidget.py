@@ -44,12 +44,12 @@ class passengerHomeWidget(QtGui.QWidget):
         self.passengerHomeLabel.setFont(font)
         self.passengerHomeLabel.setObjectName(("passengerHomeLabel"))
         
-        self.textEdit = QtGui.QTextEdit(self)
-        self.textEdit.setGeometry(QtCore.QRect(140, 60, 211, 31))
-        self.textEdit.setAcceptDrops(True)
-        self.textEdit.setObjectName(("textEdit"))
-        self.textEdit.setReadOnly(True)
-        self.textEdit.setText(self.p_name)
+        self.PassengerNameField = QtGui.QTextEdit(self)
+        self.PassengerNameField.setGeometry(QtCore.QRect(140, 60, 211, 31))
+        self.PassengerNameField.setAcceptDrops(True)
+        self.PassengerNameField.setObjectName(("PassengerNameField"))
+        self.PassengerNameField.setReadOnly(True)
+        self.PassengerNameField.setText(self.p_name)
         
         self.myTrips_button = QtGui.QPushButton(self)
         self.myTrips_button.setGeometry(QtCore.QRect(200, 100, 101, 41))
