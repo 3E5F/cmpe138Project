@@ -43,8 +43,11 @@ class passenger_insert(core):
 			while self.passenger_id in current_passenger_id:
 				self.passenger_id = str(int(random.triangular(default_values['PASSENGER_LOW'], default_values['PASSENGER_HIGH'])))
 
-			query = default_values['INSERT_PASSENGER'].format(self.passenger_id, self.first_name, self.last_name, self.current_date, self.current_time, self.destination)
+			query = default_values['QUERY_INSERT_PASSENGER'].format(self.passenger_id, self.first_name, self.last_name, self.current_date, self.current_time, self.destination)
 			self.mysql_cursor.execute(query)
 			self.mysql_connector.commit()
 		except Exception as e:
 			print(e)
+
+	def get_passenger_id(self):
+		return str(self.passenger_id)
