@@ -6,6 +6,7 @@ from core import *
 # Default values
 default_values = {}
 default_values['TRAIN_RETURN'] = 5
+default_values['TRAIN_QUERY'] = 'select * from train'
 
 class train_schedules(core):
 	def __init__(self):
@@ -16,9 +17,9 @@ class train_schedules(core):
 
 	def query_train_schedules(self):
 		str_query = None
-
-		str_query = 'select * from train'
+		
 		try:
+			str_query = default_values['TRAIN_QUERY']
 			self.mysql_cursor.execute(str_query)
 
 			for elem in self.mysql_cursor:

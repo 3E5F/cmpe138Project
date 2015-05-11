@@ -4,6 +4,7 @@ from PySide import QtCore, QtGui
 class mainMenuWidget(QtGui.QWidget):
     pLoginRequest = QtCore.Signal()
     cLoginRequest = QtCore.Signal()
+    purchaseTicketRequest = QtCore.Signal()
     
     def __init__(self):
         super (mainMenuWidget, self).__init__()
@@ -25,23 +26,26 @@ class mainMenuWidget(QtGui.QWidget):
         #self.label.setFont(font)
         
         self.verticalLayoutWidget = QtGui.QWidget(self)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(150, 50, 200, 200))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(150, 0, 200, 300))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtGui.QVBoxLayout(self.verticalLayoutWidget)
         #self.verticalLayout.setMargin(0)
         self.verticalLayout.setObjectName(("verticalLayout"))
+        
         self.PalTrainLabel = QtGui.QLabel(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(20)
         self.PalTrainLabel.setFont(font)
         self.PalTrainLabel.setObjectName(("PalTrainLabel"))
         self.verticalLayout.addWidget(self.PalTrainLabel)
+        
         self.PassengerLoginButton = QtGui.QPushButton(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.PassengerLoginButton.setFont(font)
         self.PassengerLoginButton.setObjectName(("PassengerLoginButton"))
         self.verticalLayout.addWidget(self.PassengerLoginButton)
+        
         self.ConductorLoginButton = QtGui.QPushButton(self.verticalLayoutWidget)
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -49,9 +53,18 @@ class mainMenuWidget(QtGui.QWidget):
         self.ConductorLoginButton.setObjectName(("ConductorLoginButton"))
         self.verticalLayout.addWidget(self.ConductorLoginButton)
         
+        self.PurchaseButton = QtGui.QPushButton(self.verticalLayoutWidget)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.PurchaseButton.setFont(font)
+        self.PurchaseButton.setObjectName(("ConductorLoginButton"))
+        self.verticalLayout.addWidget(self.PurchaseButton)
+        
+        
         #Connecting Buttons
         self.PassengerLoginButton.clicked.connect(self.passengerLoginScreen)
         self.ConductorLoginButton.clicked.connect(self.conductorLoginScreen)
+        self.PurchaseButton.clicked.connect(self.purchaseScreen)
                 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
@@ -64,9 +77,15 @@ class mainMenuWidget(QtGui.QWidget):
         self.PalTrainLabel.setText(QtGui.QApplication.translate("Form", "     PalTrain", None, QtGui.QApplication.UnicodeUTF8))
         self.PassengerLoginButton.setText(QtGui.QApplication.translate("Form", "Passenger Login", None, QtGui.QApplication.UnicodeUTF8))
         self.ConductorLoginButton.setText(QtGui.QApplication.translate("Form", "Conductor Login", None, QtGui.QApplication.UnicodeUTF8))
+        self.PurchaseButton.setText(QtGui.QApplication.translate("Form", "Purchase Ticket", None, QtGui.QApplication.UnicodeUTF8))
+        
         #self.UpdateButton.setText(QtGui.QApplication.translate("Form", "Update", None, QtGui.QApplication.UnicodeUTF8))
         #self.NameLabel.setText(QtGui.QApplication.translate("Form", "Name               ", None, QtGui.QApplication.UnicodeUTF8))
         #self.DescriptionLabel.setText(QtGui.QApplication.translate("Form", "Description       ", None, QtGui.QApplication.UnicodeUTF8))
+    
+    def purchaseScreen(self):
+        print "Transitioning to purchase screen"
+        self.purchaseTicketRequest.emit()
     
     def passengerLoginScreen(self):
         print "Transitioning to passenger login screen"
